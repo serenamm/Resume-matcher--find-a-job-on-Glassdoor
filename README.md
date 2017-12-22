@@ -7,4 +7,6 @@ helper.py: Helper methods for scraping and resume text analysis
 scrapeGlassdoor.py: Scrape Glassdoor to obtain the data
 app.R: The R-Shiny app.
 
+Here's a screenshot of the app:
+
 ![R-Shiny Screenshot](Shiny_screenshot.png)
