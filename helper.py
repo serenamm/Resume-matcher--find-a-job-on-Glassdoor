@@ -17,7 +17,6 @@ from selenium.webdriver.common import action_chains, keys
 from selenium.common.exceptions import NoSuchElementException
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
-#import operator # To "sort" dictionary values i.e. sort a representation of the dict that is sorted
 
 def load_obj(name ):
     with open(name + '.pkl', 'rb') as f:
@@ -30,9 +29,6 @@ def save_obj(obj, name ):
 
 '''
 Initialize Chrome Driver
-
-DONE
-
 '''
 def initialize_browser():
 
@@ -56,14 +52,8 @@ Get jobs by scraping with Chrome Driver
 Returns: 
     job_dict: dict with job ID as keys, link to job as value
     job_desc: dict with job ID as keys, job description as value
-    
-DONE
 '''
-
 def search_jobs(job_name, city, job_dict, desc_dict, num_pages):
-
-    #job_name = "Data Scientist"
-    #city = "Vancouver"
     
     browser = initialize_browser()
     browser.get("https://www.glassdoor.ca/index.htm")
@@ -79,17 +69,11 @@ def search_jobs(job_name, city, job_dict, desc_dict, num_pages):
     # Set up initial page
     initial_url = browser.current_url
     
-
     for i in range(num_pages): # Get first num_pages pages 
-        
-#        try:
-#            browser.find_element_by_class_name('mfp-close').click() # Close any pop ups
-#        except:
-#            pass
 
         try:
             # Extract useful classes
-            job_postings = browser.find_elements_by_class_name('jl') # they changed it lol
+            job_postings = browser.find_elements_by_class_name('jl')
             sleep(get_pause())
             for element in job_postings:
                 j_id = element.get_attribute("data-id") # job_id
@@ -98,22 +82,16 @@ def search_jobs(job_name, city, job_dict, desc_dict, num_pages):
                 element.find_element_by_class_name("jobLink").click() # Click onto JD to expand
                 sleep(2) # The key was to wait for it to load, yay!
                 desc = browser.find_element_by_css_selector("#JobDesc" + j_id + " > div").text # Get description
-                # job_title, company name, location 
                 try:
                     job_title = browser.find_element_by_css_selector("div.empInfo.tbl").text
                     company = browser.find_element_by_class_name("empDetailsLink").text
                     if j_id not in job_dict.keys():
-                   # if (link not in job_dict.values()) and (j_id not in job_dict.keys()):
-                      #  job_dict[j_id] = link
                         desc_dict[j_id] = desc  # To work directly with this dict
-                       # info_dict[j_id] = [job_title, company, "Vancouver"]
                         job_dict[j_id] = [job_title, company, city, link]
                 except:
                     pass
                     
         except Exception as e:
-    #        el = element.find_element_by_tag_name("i").click()
-    #        desc = browser.find_element_by_xpath("//*[@id='JobDesc" + str(j_id) +"']/div").text
             print(e)   
             
         try:    
@@ -137,7 +115,6 @@ Clean up text
 Input: Description from desc_dict
 Output: Cleaned text
 '''
-
 def text_cleaner(text_temp):
     from nltk.corpus import stopwords
     stopwords = set(stopwords.words("english"))
@@ -146,9 +123,7 @@ def text_cleaner(text_temp):
                                              # Also include + for C++    
     text = text.lower()  # Go to lower case   
     text = text.split()  #  and split them apart        
-    text = [w for w in text if not w in stopwords]                
-    #text = list(set(text)) # Last, just get the set of these. Ignore counts (we are just looking at whether a term existed
-                            # or not on the website)        
+    text = [w for w in text if not w in stopwords]                    
     return text 
 
 from nltk.corpus import stopwords
@@ -187,8 +162,6 @@ def best_match(cv, d_dict):
         #desc = text_cleaner(value)
         sim[key] = get_sim(cv_cleaned, value)
         
-    #sorted_sim = sorted(sim.items, key = operator.itemgetter(1))
-    #best_id = sorted_sim.keys()[0]
     best_match_dict = sorted(sim.items(), key=lambda x:x[1], reverse = True)
     return best_match_dict
       
