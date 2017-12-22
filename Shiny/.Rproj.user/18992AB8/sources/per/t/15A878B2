@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1513803166129.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "88109718",
+    "id" : "15A878B2",
+    "lastKnownWriteTime" : 1513875183,
+    "last_content_update" : 1513875183424,
+    "path" : "C:/Data/Projects/Glassdoor/Shiny/app.R",
+    "project_path" : "app.R",
+    "properties" : {
+        "cursorPosition" : "70,20",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
