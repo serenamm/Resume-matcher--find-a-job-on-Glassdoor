@@ -10,3 +10,5 @@ app.R: The R-Shiny app.
 Here's a screenshot of the app:
 
 ![R-Shiny Screenshot](Shiny_screenshot.png)
+
+Check out my blog post for more details: http://webdropin.com/wordpress99/resume-text-analysis-find-a-job-on-glassdoor-ca/
